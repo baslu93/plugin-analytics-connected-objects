@@ -1,0 +1,56 @@
+name: Publish Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prepare-release:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      version: ${{ steps.release.outputs.version }}
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          package-name: check-workflow2
+
+  release:
+    needs: prepare-release
+    runs-on: ubuntu-latest
+    if: needs.prepare-release.outputs.release_created == 'true'
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup dependencies, cache and install
+        uses: ./.github/actions/install
+
+      - name: Publish to npm
+        run: yarn publish --access public --tag latest-rc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Communication
+        uses: apexskier/github-release-commenter@v1
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
+          comment-template: |
+            Shipped in ${{ needs.prepare-release.outputs.version }}
+            You can install the new version using the version number or the `latest-rc` channel
+            ```sh
+            $ sf plugins install plugin-analytics-connected-objects@latest-rc
+            $ sf plugins install plugin-analytics-connected-objects@${{ needs.prepare-release.outputs.version }}
+            ```
