@@ -1,4 +1,4 @@
-# Analytics Connect-Objects Plugin
+# Analytics Connected-Objects Plugin
 
 [![npm](https://badgen.net/npm/v/plugin-analytics-connected-objects)](https://badgen.net/npm/v/plugin-analytics-connected-objects)
 [![downloads](https://badgen.net/npm/dw/plugin-analytics-connected-objects)](https://badgen.net/npm/dw/plugin-analytics-connected-objects)
