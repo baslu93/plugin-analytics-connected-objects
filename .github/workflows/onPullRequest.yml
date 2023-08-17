@@ -33,4 +33,4 @@ jobs:
           sf plugins
 
       - name: Unit test
-        run: yarn test:only:coverage
+        run: yarn test:only
