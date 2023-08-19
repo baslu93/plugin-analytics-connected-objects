@@ -58,7 +58,7 @@
     "sf-plugin",
     "sf"
   ],
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "main": "lib/index.js",
   "oclif": {
     "commands": "./lib/commands",
