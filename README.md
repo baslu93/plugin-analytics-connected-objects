@@ -35,6 +35,16 @@ Run the following command:
 sf plugins install plugin-analytics-connected-objects
 ```
 
+You will be prompted to confirm that you want to install an unsigned plugin. Choose `y`
+
+To prevent this message from appearing, you can add this to the Allow List by adding an entry for it in [$HOME/.config/sfdx/unsignedPluginAllowList.json](https://developer.salesforce.com/blogs/2017/10/salesforce-dx-cli-plugin-update).
+
+CI Users: As the plugin is not signed, to install it from a Dockerfile or a script:
+
+```bash
+echo 'y' | sf plugins install plugin-analytics-connected-objects
+```
+
 ## Commands
 
 <!-- commands -->
