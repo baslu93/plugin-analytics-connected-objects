@@ -35,11 +35,7 @@ Run the following command:
 sf plugins install plugin-analytics-connected-objects
 ```
 
-You will be prompted to confirm that you want to install an unsigned plugin. Choose 'y'
-
-```
-This plugin is not digitally signed and its authenticity cannot be verified. Continue installation? (y/N)
-```
+You will be prompted to confirm that you want to install an unsigned plugin. Choose `y`
 
 To prevent this message from appearing, you can add this to the Allow List by adding an entry for it in [$HOME/.config/sfdx/unsignedPluginAllowList.json](https://developer.salesforce.com/blogs/2017/10/salesforce-dx-cli-plugin-update).
 
