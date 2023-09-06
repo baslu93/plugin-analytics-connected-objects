@@ -9,24 +9,6 @@ The process is highly manual, and forgetting to track certain fields often cause
 
 The command, which can be executed locally or inserted into a CI/CD pipeline, verifies the required fields from the recipes and marks them in the environment within seconds.
 
-## Issues
-
-Please report any <a href="https://github.com/baslu93/plugin-analytics-connected-objects/issues/new?template=enhancement.md&title=feat%3A+%5BFEATURE+NAME%5D">new feature</a>
-or <a href="https://github.com/baslu93/plugin-analytics-connected-objects/issues/new?template=issue.md&title=bug%3A+%5BBUG+NAME%5D">bug</a>
-using this links.
-
-## Contributing
-
-1. Create a new issue before starting your project so that we can keep track of
-   what you are trying to add/fix. That way, we can also offer suggestions or
-   let you know if there is already an effort in progress.
-2. Fork this repository.
-3. Build the plugin locally.
-4. Write appropriate tests for your changes. Try to achieve at least 75% code coverage on any new code.
-   Nuts are required, but code coverage will be based on unit tests only.
-5. Send us a pull request when you are done (linking the issue previously created).  
-   We'll review your code, suggest any needed changes, and merge it in.
-
 ## Install
 
 Run the following command (if you are still using the old CLI, relace `sf` with `sfdx` or [move to the new CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_move_to_sf_v2.htm)):
@@ -44,6 +26,24 @@ CI Users: As the plugin is not signed, to install it from a Dockerfile or a scri
 ```bash
 echo 'y' | sf plugins install plugin-analytics-connected-objects
 ```
+
+## Issues
+
+Please report any <a href="https://github.com/baslu93/plugin-analytics-connected-objects/issues/new?template=enhancement.md&title=feat%3A+%5BFEATURE+NAME%5D">new feature</a>
+or <a href="https://github.com/baslu93/plugin-analytics-connected-objects/issues/new?template=issue.md&title=bug%3A+%5BBUG+NAME%5D">bug</a>
+using this links.
+
+## Contributing
+
+1. Create a new issue before starting your project so that we can keep track of
+   what you are trying to add/fix. That way, we can also offer suggestions or
+   let you know if there is already an effort in progress.
+2. Fork this repository.
+3. Build the plugin locally.
+4. Write appropriate tests for your changes. Try to achieve at least 75% code coverage on any new code.
+   Nuts are required, but code coverage will be based on unit tests only.
+5. Send us a pull request when you are done (linking the issue previously created).  
+   We'll review your code, suggest any needed changes, and merge it in.
 
 ## Commands
 
