@@ -29,7 +29,7 @@ using this links.
 
 ## Install
 
-Run the following command:
+Run the following command (if you are still using the old CLI, relace `sf` with `sfdx` or [move to the new CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_move_to_sf_v2.htm)):
 
 ```bash
 sf plugins install plugin-analytics-connected-objects
@@ -48,7 +48,8 @@ echo 'y' | sf plugins install plugin-analytics-connected-objects
 ## Commands
 
 <!-- commands -->
-* [`sf analytics connected-objects upsert`](#sf-analytics-connected-objects-upsert)
+
+- [`sf analytics connected-objects upsert`](#sf-analytics-connected-objects-upsert)
 
 ## `sf analytics connected-objects upsert`
 
@@ -104,4 +105,5 @@ FLAG DESCRIPTIONS
 
     Overrides your default org.
 ```
+
 <!-- commandsstop -->
