@@ -48,8 +48,7 @@ echo 'y' | sf plugins install plugin-analytics-connected-objects
 ## Commands
 
 <!-- commands -->
-
-- [`sf analytics connected-objects upsert`](#sf-analytics-connected-objects-upsert)
+* [`sf analytics connected-objects upsert`](#sf-analytics-connected-objects-upsert)
 
 ## `sf analytics connected-objects upsert`
 
@@ -79,12 +78,17 @@ DESCRIPTION
   In case a new object is added a connection, the connection mode will be the default one.
 
 EXAMPLES
-  - Create/update objects and fields in analytics connections given a recipe in your local repository
-    sf analytics connected-objects upsert --recipe-names ApiName
-  - Create/update objects and fields in analytics connections given multiple recipes in your local repository
-  $ sf analytics connected-objects upsert --recipe-names ApiName1,ApiName2
-  - Create/update objects and fields in analytics connections given all recipes in your local repository
-    sf analytics connected-objects upsert --all
+  Create/update objects and fields in analytics connections given a recipe in your local repository
+
+    $ sf analytics connected-objects upsert --recipe-names ApiName
+
+  Create/update objects and fields in analytics connections given multiple recipes in your local repository
+
+    $ sf analytics connected-objects upsert --recipe-names ApiName1,ApiName2
+
+  Create/update objects and fields in analytics connections given all recipes in your local repository
+
+    $ sf analytics connected-objects upsert --all
 
 FLAG DESCRIPTIONS
   -a, --api-version=<value>  Target API version for the callouts.
@@ -100,5 +104,4 @@ FLAG DESCRIPTIONS
 
     Overrides your default org.
 ```
-
 <!-- commandsstop -->

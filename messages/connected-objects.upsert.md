@@ -17,7 +17,7 @@ In case a new object is added a connection, the connection mode will be the defa
 
 - Create/update objects and fields in analytics connections given multiple recipes in your local repository
 
-<%= config.bin %> <%= command.id %> --recipe-names ApiName1,ApiName2
+  <%= config.bin %> <%= command.id %> --recipe-names ApiName1,ApiName2
 
 - Create/update objects and fields in analytics connections given all recipes in your local repository
 
