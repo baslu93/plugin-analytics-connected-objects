@@ -1,31 +1,13 @@
 # Analytics Connected-Objects Plugin
 
-[![npm](https://badgen.net/npm/v/plugin-analytics-connected-objects)](https://badgen.net/npm/v/plugin-analytics-connected-objects)
-[![downloads](https://badgen.net/npm/dw/plugin-analytics-connected-objects)](https://badgen.net/npm/dw/plugin-analytics-connected-objects)
+[![npm](https://badgen.net/npm/v/plugin-analytics-connected-objects)](https://www.npmjs.com/package/plugin-analytics-connected-objects)
+[![downloads](https://badgen.net/npm/dw/plugin-analytics-connected-objects)](https://www.npmjs.com/package/plugin-analytics-connected-objects)
 
 The plugin enhances the productivity of CRMA developers and release managers by automating manual procedural tasks related to connected objects. Nowadays, each time a new field is used in recipes, the user tracks the field in notes. Later, when there's a need to migrate the recipe to a higher environment, the user manually checks off each field one by one in the connected objects according to the taken notes.
 
 The process is highly manual, and forgetting to track certain fields often causes recipe run failures. The run failures highlight one field at a time, and the process should be repeated until the first successful run.
 
 The command, which can be executed locally or inserted into a CI/CD pipeline, verifies the required fields from the recipes and marks them in the environment within seconds.
-
-## Issues
-
-Please report any <a href="https://github.com/baslu93/plugin-analytics-connected-objects/issues/new?template=enhancement.md&title=feat%3A+%5BFEATURE+NAME%5D">new feature</a>
-or <a href="https://github.com/baslu93/plugin-analytics-connected-objects/issues/new?template=issue.md&title=bug%3A+%5BBUG+NAME%5D">bug</a>
-using this links.
-
-## Contributing
-
-1. Create a new issue before starting your project so that we can keep track of
-   what you are trying to add/fix. That way, we can also offer suggestions or
-   let you know if there is already an effort in progress.
-2. Fork this repository.
-3. Build the plugin locally.
-4. Write appropriate tests for your changes. Try to achieve at least 75% code coverage on any new code.
-   Nuts are required, but code coverage will be based on unit tests only.
-5. Send us a pull request when you are done (linking the issue previously created).  
-   We'll review your code, suggest any needed changes, and merge it in.
 
 ## Install
 
@@ -44,6 +26,24 @@ CI Users: As the plugin is not signed, to install it from a Dockerfile or a scri
 ```bash
 echo 'y' | sf plugins install plugin-analytics-connected-objects
 ```
+
+## Issues
+
+Please report any <a href="https://github.com/baslu93/plugin-analytics-connected-objects/issues/new?template=enhancement.md&title=feat%3A+%5BFEATURE+NAME%5D">new feature</a>
+or <a href="https://github.com/baslu93/plugin-analytics-connected-objects/issues/new?template=issue.md&title=bug%3A+%5BBUG+NAME%5D">bug</a>
+using this links.
+
+## Contributing
+
+1. Create a new issue before starting your project so that we can keep track of
+   what you are trying to add/fix. That way, we can also offer suggestions or
+   let you know if there is already an effort in progress.
+2. Fork this repository.
+3. Build the plugin locally.
+4. Write appropriate tests for your changes. Try to achieve at least 75% code coverage on any new code.
+   Nuts are required, but code coverage will be based on unit tests only.
+5. Send us a pull request when you are done (linking the issue previously created).  
+   We'll review your code, suggest any needed changes, and merge it in.
 
 ## Commands
 
