@@ -19,7 +19,7 @@ jobs:
         id: release
         with:
           release-type: node
-          package-name: check-workflow2
+          package-name: plugin-analytics-connected-objects
 
   release:
     needs: prepare-release
