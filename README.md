@@ -1,7 +1,7 @@
 # Analytics Connected-Objects Plugin
 
-[![npm](https://badgen.net/npm/v/plugin-analytics-connected-objects)](https://badgen.net/npm/v/plugin-analytics-connected-objects)
-[![downloads](https://badgen.net/npm/dw/plugin-analytics-connected-objects)](https://badgen.net/npm/dw/plugin-analytics-connected-objects)
+[![npm](https://badgen.net/npm/v/plugin-analytics-connected-objects)](https://www.npmjs.com/package/plugin-analytics-connected-objects)
+[![downloads](https://badgen.net/npm/dw/plugin-analytics-connected-objects)](https://www.npmjs.com/package/plugin-analytics-connected-objects)
 
 The plugin enhances the productivity of CRMA developers and release managers by automating manual procedural tasks related to connected objects. Nowadays, each time a new field is used in recipes, the user tracks the field in notes. Later, when there's a need to migrate the recipe to a higher environment, the user manually checks off each field one by one in the connected objects according to the taken notes.
 
