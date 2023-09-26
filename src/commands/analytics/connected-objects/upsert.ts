@@ -98,6 +98,8 @@ export default class ConnectedObjectUpsert extends SfCommand<ConnectedObjectUpse
     const progressBar = new Progress(!this.jsonEnabled());
     progressBar.start(total, {}, { format: '%s | {bar} | {value}/{total} Objects' });
 
+    const warnMessages = new Array<string>();
+
     // Create / Update connected-objects
     const resultMap = new Map<string, ConnectedObjectUpsertResult>();
     for (const connectorName of connectorObjectFields.keys()) {
@@ -112,7 +114,12 @@ export default class ConnectedObjectUpsert extends SfCommand<ConnectedObjectUpse
           resultMap.set(objectName, { objectName, isNew: false, connectorName });
         }
         const fieldSet = objectFields.get(dataset.sourceObjectName) as Set<string>;
-        const changedFields = await service.updateReplicatedDatasetFields(dataset.id, fieldSet);
+        const {changedFields, missingFields} = await service.updateReplicatedDatasetFields(dataset.id, fieldSet);
+
+        if(missingFields.length > 0){
+          const message = messages.getMessage('fields.not.found', [objectName, connectorName, missingFields.join(', ')]); 
+          warnMessages.push(message);
+        }
         if (changedFields.length > 0) {
           const item = resultMap.get(dataset.sourceObjectName) as ConnectedObjectUpsertResult;
           item.fields = changedFields;
@@ -123,6 +130,15 @@ export default class ConnectedObjectUpsert extends SfCommand<ConnectedObjectUpse
       }
     }
     progressBar.stop();
+
+    if(warnMessages.length > 0){
+      if(!flags.json){
+        warnMessages[warnMessages.length -1] += '\n'; // Last warning line break 
+      }
+      for(const warnMessage of warnMessages){
+        this.warn(warnMessage);
+      }
+    }
 
     const result: ConnectedObjectUpsertResult[] = Array.from(resultMap.values()).filter(
       (x) => x.fields && x.fields.length > 0
