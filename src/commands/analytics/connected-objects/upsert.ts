@@ -3,7 +3,7 @@ import { SfCommand, Flags, Progress } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import { blue, bold } from 'chalk';
 import { MetadataBuilder } from '../../../metadataBuilder';
-import { DataConnectionHelper } from '../../../dataConnectionHelper';
+import { ApiHelper } from '../../../apiHelper';
 import { RecipeDefinition, LoadDefinitionNodeParam, ReplicatedDataset } from '../../../modules/upsert';
 import { PrinterHelper } from '../../../printerHelper';
 
@@ -57,7 +57,7 @@ export default class ConnectedObjectUpsert extends SfCommand<ConnectedObjectUpse
   public async run(): Promise<ConnectedObjectUpsertResult[]> {
     const { flags } = await this.parse(ConnectedObjectUpsert);
     const conn = flags['target-org'].getConnection(flags['api-version']);
-    const service = new DataConnectionHelper(conn);
+    const service = new ApiHelper(conn);
 
     // get object and fields from recipes
     const entries = flags.all ? ['WaveRecipe'] : flags['recipe-names']?.map((name) => `WaveRecipe:${name}`);
