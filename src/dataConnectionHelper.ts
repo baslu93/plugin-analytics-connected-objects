@@ -1,5 +1,5 @@
 import { Connection } from '@salesforce/core';
-import { GetDataConnectors, GetReplicatedDatasets, PostReplicatedDataset, ReplicatedDataset } from './modules/upsert';
+import { ChangedAndMissingFields, GetDataConnectors, GetReplicatedDatasets, PostReplicatedDataset, ReplicatedDataset } from './modules/upsert';
 import { GetReplicatedDatasetFields } from './modules/upsert';
 
 export class DataConnectionHelper {
@@ -35,19 +35,27 @@ export class DataConnectionHelper {
     return result;
   }
 
-  public async updateReplicatedDatasetFields(datasetId: string, repositoryFieldSet: Set<string>): Promise<string[]> {
+  public async updateReplicatedDatasetFields(datasetId: string, repositoryFieldSet: Set<string>): Promise<ChangedAndMissingFields> {
     const replicatedDatasetFieldsObject = await this.getReplicatedDatasetFields(datasetId);
-    const result = new Array<string>();
+    const changedFields = new Array<string>();
+    const orgFieldSet = new Set<string>();
     for (const field of replicatedDatasetFieldsObject.fields) {
+      orgFieldSet.add(field.name);
       if (repositoryFieldSet?.has(field.name) && field.skipped) {
         field.skipped = false;
-        result.push(field.name);
+        changedFields.push(field.name);
       }
     }
-    if (result.length > 0) {
+    if (changedFields.length > 0) {
       await this.patchReplicatedDatasetFields(datasetId, replicatedDatasetFieldsObject);
     }
-    return result;
+    const missingFields = new Array<string>();
+    for (const field of Array.from(repositoryFieldSet)){
+      if(!orgFieldSet.has(field)){
+        missingFields.push(field);
+      }
+    }
+    return {changedFields, missingFields};
   }
 
   private async getReplicatedDatasetFields(datasetId: string): Promise<GetReplicatedDatasetFields> {

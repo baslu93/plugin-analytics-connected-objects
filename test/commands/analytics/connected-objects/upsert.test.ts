@@ -11,11 +11,7 @@ import { PostReplicatedDataset } from '../../../../src/modules/upsert';
 import { MetadataBuilder } from '../../../../src/metadataBuilder';
 import ConnectedObjectUpsert from '../../../../src/commands/analytics/connected-objects/upsert';
 import {
-  createReplicatedDateset,
-  getDataConnectors,
-  getEmptyReplicatedDataset,
-  getReplicatedDatasetFields,
-  getReplicatedDatasets,
+  createReplicatedDateset, getDataConnectors, getEmptyReplicatedDataset, getReplicatedDatasetFields, getReplicatedDatasets
 } from './mocks/apis';
 import { recipeFields, simpleRecipe } from './mocks/recipes';
 
@@ -23,6 +19,7 @@ describe('analytics recipe run', () => {
   const $$ = new TestContext();
   const testOrg = new MockTestOrgData();
   const config = new Config({ root: resolve(__dirname, '../../../package.json') });
+  const commandParams = ['--target-org', 'test@org.com', '--recipe-names', 'Simple_Recipe'];
 
   beforeEach('prepare session', async () => {
     await $$.stubAuths(testOrg);
@@ -40,23 +37,18 @@ describe('analytics recipe run', () => {
         result = createReplicatedDateset(body.connectorId, body.sourceObjectName);
       } else {
         // Replicated Data Fields API
-        const fieldIsSkipped = new Map([...recipeFields, 'Extra'].map((field) => [field, true]));
+        const fieldIsSkipped = new Map(recipeFields.map((field) => [field, true]));
         result = getReplicatedDatasetFields(fieldIsSkipped);
       }
       return Promise.resolve(result);
     };
   });
 
-  after(async () => {
-    $$.restore();
-  });
-
-  it('should create a new connected-object with all recipe fields (except "Extra"), return a json', async () => {
+  after(async () => { $$.restore(); });
+  
+  it('should mark multiple fields and return a json', async () => {
     stubMethodsInMetadataBuilder($$, simpleRecipe);
-    const cmd = new ConnectedObjectUpsert(
-      ['--target-org', 'test@org.com', '--recipe-names', 'Simple_Recipe', '--json'],
-      config
-    );
+    const cmd = new ConnectedObjectUpsert([...commandParams, '--json'], config);
     const result = await cmd.run();
     expect(result).to.deep.equal([
       {
@@ -64,26 +56,23 @@ describe('analytics recipe run', () => {
         isNew: true,
         fields: recipeFields,
         fieldsCount: recipeFields.length,
-        connectorName: 'SFDC_LOCAL',
-      },
+        connectorName: 'SFDC_LOCAL'
+      }
     ]);
   });
 
-  it('should update a single connected-object with 1 changed fields, return a json', async () => {
+  it('should mark a single field and return a json', async () => {
     $$.SANDBOX.stub(MetadataBuilder.prototype, 'getElements').resolves([simpleRecipe]);
     $$.SANDBOX.stub(DataConnectionHelper.prototype, 'getReplicatedDatasets').resolves(
       getReplicatedDatasets(['User']).replicatedDatasets
     );
-    const fieldIsSkipped = new Map([...recipeFields, 'Extra'].map((field) => [field, false]));
+    const fieldIsSkipped = new Map(recipeFields.map((field) => [field, false]));
     const USERNAME = 'Username';
     fieldIsSkipped.set(USERNAME, true);
     $$.SANDBOX.stub(DataConnectionHelper.prototype, 'getReplicatedDatasetFields' as any).resolves(
       getReplicatedDatasetFields(fieldIsSkipped)
     );
-    const cmd = new ConnectedObjectUpsert(
-      ['--target-org', 'test@org.com', '--recipe-names', 'Simple_Recipe', '--json', '--verbose'],
-      config
-    );
+    const cmd = new ConnectedObjectUpsert([...commandParams, '--json'], config);
     const result = await cmd.run();
     expect(result).to.deep.equal([
       {
@@ -92,39 +81,35 @@ describe('analytics recipe run', () => {
         fields: [USERNAME],
         fieldsCount: 1,
         connectorName: 'SFDC_LOCAL',
-      },
+      }
     ]);
   });
 
-  it('should update a single connected-object with 1 changed field, print result', async () => {
+  it('should mark multiple fields and print result (warn: 1 extra field found)', async () => {
     $$.SANDBOX.stub(MetadataBuilder.prototype, 'getElements').resolves([simpleRecipe]);
     $$.SANDBOX.stub(DataConnectionHelper.prototype, 'getReplicatedDatasets').resolves(
       getReplicatedDatasets(['User']).replicatedDatasets
     );
-    const fieldIsSkipped = new Map([...recipeFields, 'Extra'].map((field) => [field, true]));
+    const fieldIsSkipped = new Map(recipeFields.map((field) => [field, true]));
+    recipeFields.push('Extra__c');
     $$.SANDBOX.stub(DataConnectionHelper.prototype, 'getReplicatedDatasetFields' as any).resolves(
       getReplicatedDatasetFields(fieldIsSkipped)
     );
-    const cmd = new ConnectedObjectUpsert(
-      ['--target-org', 'test@org.com', '--recipe-names', 'Simple_Recipe', '--verbose'],
-      config
-    );
+    const cmd = new ConnectedObjectUpsert([...commandParams, '--verbose'], config);
     await cmd.run();
   });
 
-  it('should make no change and return a json', async () => {
+  it('should make no changes and return a json', async () => {
     $$.SANDBOX.stub(MetadataBuilder.prototype, 'getElements').resolves([simpleRecipe]);
     $$.SANDBOX.stub(DataConnectionHelper.prototype, 'getReplicatedDatasets').resolves(
       getReplicatedDatasets(['User']).replicatedDatasets
     );
-    const fieldIsSkipped = new Map([...recipeFields, 'Extra'].map((field) => [field, false]));
+    const fieldIsSkipped = new Map(recipeFields.map((field) => [field, false]));
+    recipeFields.push('Extra__c');
     $$.SANDBOX.stub(DataConnectionHelper.prototype, 'getReplicatedDatasetFields' as any).resolves(
       getReplicatedDatasetFields(fieldIsSkipped)
     );
-    const cmd = new ConnectedObjectUpsert(
-      ['--target-org', 'test@org.com', '--recipe-names', 'Simple_Recipe', '--json', '--verbose'],
-      config
-    );
+    const cmd = new ConnectedObjectUpsert([...commandParams, '--json', '--verbose'], config);
     const result = await cmd.run();
     expect(result).to.lengthOf(0);
   });

@@ -50,3 +50,7 @@ Nothing changed
 # connector.not.found
 
 Connector named %s not found. Create an empty data connection to proceed
+
+# fields.not.found
+
+The following field/s of %s (%s) is/are missing and cannot be updated: %s

@@ -80,3 +80,8 @@ export type GetDataConnectors = {
   dataConnectors: DataConnector[];
   url: string;
 };
+
+export type ChangedAndMissingFields = {
+  changedFields: string[];
+  missingFields: string[];
+}
