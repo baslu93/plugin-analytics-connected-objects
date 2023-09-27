@@ -8,7 +8,7 @@ import { Config } from '@oclif/core';
 import { ComponentSet, ComponentSetBuilder, LazyCollection, SourceComponent } from '@salesforce/source-deploy-retrieve';
 import { ApiHelper } from '../../../../src/apiHelper';
 import { PostReplicatedDataset } from '../../../../src/modules/upsert';
-import { MetadataBuilder } from '../../../../src/metadataBuilder';
+import { MetadataHelper } from '../../../../src/metadataHelper';
 import ConnectedObjectUpsert from '../../../../src/commands/analytics/connected-objects/upsert';
 import {
   createReplicatedDateset, getDataConnectors, getEmptyReplicatedDataset, getReplicatedDatasetFields, getReplicatedDatasets
@@ -47,7 +47,7 @@ describe('analytics recipe run', () => {
   after(async () => { $$.restore(); });
   
   it('should mark multiple fields and return a json', async () => {
-    stubMethodsInMetadataBuilder($$, simpleRecipe);
+    stubMethodsInMetadataHelper($$, simpleRecipe);
     const cmd = new ConnectedObjectUpsert([...commandParams, '--json'], config);
     const result = await cmd.run();
     expect(result).to.deep.equal([
@@ -62,7 +62,7 @@ describe('analytics recipe run', () => {
   });
 
   it('should mark a single field and return a json', async () => {
-    $$.SANDBOX.stub(MetadataBuilder.prototype, 'getElements').resolves([simpleRecipe]);
+    $$.SANDBOX.stub(MetadataHelper.prototype, 'getElements').resolves([simpleRecipe]);
     $$.SANDBOX.stub(ApiHelper.prototype, 'getReplicatedDatasets').resolves(
       getReplicatedDatasets(['User']).replicatedDatasets
     );
@@ -86,7 +86,7 @@ describe('analytics recipe run', () => {
   });
 
   it('should mark multiple fields and print result (warn: 1 extra field found)', async () => {
-    $$.SANDBOX.stub(MetadataBuilder.prototype, 'getElements').resolves([simpleRecipe]);
+    $$.SANDBOX.stub(MetadataHelper.prototype, 'getElements').resolves([simpleRecipe]);
     $$.SANDBOX.stub(ApiHelper.prototype, 'getReplicatedDatasets').resolves(
       getReplicatedDatasets(['User']).replicatedDatasets
     );
@@ -100,7 +100,7 @@ describe('analytics recipe run', () => {
   });
 
   it('should make no changes and return a json', async () => {
-    $$.SANDBOX.stub(MetadataBuilder.prototype, 'getElements').resolves([simpleRecipe]);
+    $$.SANDBOX.stub(MetadataHelper.prototype, 'getElements').resolves([simpleRecipe]);
     $$.SANDBOX.stub(ApiHelper.prototype, 'getReplicatedDatasets').resolves(
       getReplicatedDatasets(['User']).replicatedDatasets
     );
@@ -115,7 +115,7 @@ describe('analytics recipe run', () => {
   });
 });
 
-function stubMethodsInMetadataBuilder(testContext: TestContext, result: unknown): void {
+function stubMethodsInMetadataHelper(testContext: TestContext, result: unknown): void {
   testContext.setConfigStubContents('SfProjectJson', {
     contents: { packageDirectories: [{ path: 'force-app', default: true }], pushPackageDirectoriesSequentially: true },
   });
