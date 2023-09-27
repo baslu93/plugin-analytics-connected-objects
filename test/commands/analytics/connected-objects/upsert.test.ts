@@ -46,7 +46,7 @@ describe('analytics recipe run', () => {
 
   after(async () => { $$.restore(); });
   
-  it('should upsert multiple fields, return a json', async () => {
+  it('should mark multiple fields and return a json', async () => {
     stubMethodsInMetadataBuilder($$, simpleRecipe);
     const cmd = new ConnectedObjectUpsert([...commandParams, '--json'], config);
     const result = await cmd.run();
@@ -61,7 +61,7 @@ describe('analytics recipe run', () => {
     ]);
   });
 
-  it('should update a single field, return a json', async () => {
+  it('should mark a single field and return a json', async () => {
     $$.SANDBOX.stub(MetadataBuilder.prototype, 'getElements').resolves([simpleRecipe]);
     $$.SANDBOX.stub(DataConnectionHelper.prototype, 'getReplicatedDatasets').resolves(
       getReplicatedDatasets(['User']).replicatedDatasets
@@ -85,7 +85,7 @@ describe('analytics recipe run', () => {
     ]);
   });
 
-  it('should upsert multiple fields, print result (warn: 1 extra field found)', async () => {
+  it('should mark multiple fields and print result (warn: 1 extra field found)', async () => {
     $$.SANDBOX.stub(MetadataBuilder.prototype, 'getElements').resolves([simpleRecipe]);
     $$.SANDBOX.stub(DataConnectionHelper.prototype, 'getReplicatedDatasets').resolves(
       getReplicatedDatasets(['User']).replicatedDatasets
@@ -99,7 +99,7 @@ describe('analytics recipe run', () => {
     await cmd.run();
   });
 
-  it('should make no changes, return a json', async () => {
+  it('should make no changes and return a json', async () => {
     $$.SANDBOX.stub(MetadataBuilder.prototype, 'getElements').resolves([simpleRecipe]);
     $$.SANDBOX.stub(DataConnectionHelper.prototype, 'getReplicatedDatasets').resolves(
       getReplicatedDatasets(['User']).replicatedDatasets
