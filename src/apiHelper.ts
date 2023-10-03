@@ -2,7 +2,7 @@ import { Connection } from '@salesforce/core';
 import { ChangedAndMissingFields, GetDataConnectors, GetReplicatedDatasets, PostReplicatedDataset, ReplicatedDataset } from './modules/upsert';
 import { GetReplicatedDatasetFields } from './modules/upsert';
 
-export class DataConnectionHelper {
+export class ApiHelper {
   public static readonly REPLICATED_DATASETS_API = '/wave/replicatedDatasets';
   public static readonly DATA_CONNECTORS_API = '/wave/dataConnectors';
   private conn: Connection;
@@ -14,7 +14,7 @@ export class DataConnectionHelper {
   public async getConnectors(): Promise<Map<string, string>> {
     const response = new Map<string, string>();
     const getDataConnectorsResponse = await this.conn.requestGet<GetDataConnectors>(
-      DataConnectionHelper.DATA_CONNECTORS_API
+      ApiHelper.DATA_CONNECTORS_API
     );
     for (const connector of getDataConnectorsResponse.dataConnectors) {
       response.set(connector.name, connector.id);
@@ -24,14 +24,14 @@ export class DataConnectionHelper {
 
   public async getReplicatedDatasets(): Promise<ReplicatedDataset[]> {
     const replicatedDatasets = await this.conn.requestGet<GetReplicatedDatasets>(
-      DataConnectionHelper.REPLICATED_DATASETS_API
+      ApiHelper.REPLICATED_DATASETS_API
     );
     return replicatedDatasets.replicatedDatasets;
   }
 
   public async createReplicatedDateset(connectorId: string, sourceObjectName: string): Promise<ReplicatedDataset> {
     const body: PostReplicatedDataset = { connectorId, sourceObjectName };
-    const result = await this.conn.requestPost<ReplicatedDataset>(DataConnectionHelper.REPLICATED_DATASETS_API, body);
+    const result = await this.conn.requestPost<ReplicatedDataset>(ApiHelper.REPLICATED_DATASETS_API, body);
     return result;
   }
 
@@ -60,7 +60,7 @@ export class DataConnectionHelper {
 
   private async getReplicatedDatasetFields(datasetId: string): Promise<GetReplicatedDatasetFields> {
     const result = await this.conn.requestGet<GetReplicatedDatasetFields>(
-      `${DataConnectionHelper.REPLICATED_DATASETS_API}/${datasetId}/fields`
+      `${ApiHelper.REPLICATED_DATASETS_API}/${datasetId}/fields`
     );
     return result;
   }
@@ -69,7 +69,7 @@ export class DataConnectionHelper {
     datasetId: string,
     replicatedDatasetFieldsObject: GetReplicatedDatasetFields
   ): Promise<void> {
-    await this.conn.requestPatch<object>(`${DataConnectionHelper.REPLICATED_DATASETS_API}/${datasetId}/fields`, {
+    await this.conn.requestPatch<object>(`${ApiHelper.REPLICATED_DATASETS_API}/${datasetId}/fields`, {
       fields: replicatedDatasetFieldsObject.fields,
     });
   }
