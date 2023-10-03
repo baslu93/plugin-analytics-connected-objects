@@ -1,4 +1,4 @@
-import { ApiHelper } from '../../../../../src/apiHelper';
+import { DataConnectionHelper } from '../../../../../src/dataConnectionHelper';
 import { GetDataConnectors, GetReplicatedDatasets, ReplicatedDataset } from '../../../../../src/modules/upsert';
 import { GetReplicatedDatasetFields, ReplicatedDatasetField } from '../../../../../src/modules/upsert';
 
@@ -25,7 +25,7 @@ export function getReplicatedDatasetFields(fieldIsSkipped: Map<string, boolean>)
   for (const fieldName of fieldIsSkipped.keys()) {
     result.push(getReplicatedDatasetField(fieldName, fieldIsSkipped.get(fieldName) as boolean));
   }
-  return { fields: result, url: `${ApiHelper.REPLICATED_DATASETS_API}/0Iu7Z00000001waSAA/fields` };
+  return { fields: result, url: `${DataConnectionHelper.REPLICATED_DATASETS_API}/0Iu7Z00000001waSAA/fields` };
 }
 
 export const getDataConnectors: GetDataConnectors = {

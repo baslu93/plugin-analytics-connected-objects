@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import { ComponentSetBuilder } from '@salesforce/source-deploy-retrieve';
 import { SfProject } from '@salesforce/core';
 
-export class MetadataHelper {
+export class MetadataBuilder {
   private apiversion?: string;
 
   public constructor(apiversion?: string) {
