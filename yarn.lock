@@ -8205,6 +8205,17 @@ widest-line@^3.1.0:
   dependencies:
     string-width "^4.0.0"
 
+wireit@^0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/wireit/-/wireit-0.14.1.tgz#83b63598503573db6722ad49b1fe15b57ee71890"
+  integrity sha512-q5sixPM/vKQEpyaub6J9QoHAFAF9g4zBdnjoYelH9/RLAekcUf3x1dmFLACGZ6nYjqehCsTlXC1irmzU7znPhA==
+  dependencies:
+    braces "^3.0.2"
+    chokidar "^3.5.3"
+    fast-glob "^3.2.11"
+    jsonc-parser "^3.0.0"
+    proper-lockfile "^4.1.2"
+
 wireit@^0.9.5:
   version "0.9.5"
   resolved "https://registry.npmjs.org/wireit/-/wireit-0.9.5.tgz"
