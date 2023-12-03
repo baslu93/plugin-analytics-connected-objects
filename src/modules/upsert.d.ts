@@ -60,7 +60,7 @@ export type RecipeDefinitionNodes = {
 
 export type RecipeDefinitionNode = {
   action: string;
-  parameters: LoadDefinitionNodeParam | unknown;
+  parameters: unknown;
   sources: string[];
 };
 
@@ -84,4 +84,4 @@ export type GetDataConnectors = {
 export type ChangedAndMissingFields = {
   changedFields: string[];
   missingFields: string[];
-}
+};
