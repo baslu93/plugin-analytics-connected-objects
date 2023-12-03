@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import { expect } from 'chai';
 import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup';
 import { ensureJsonMap, AnyJson } from '@salesforce/ts-types';
@@ -128,5 +128,5 @@ function stubMethodsInMetadataHelper(testContext: TestContext, result: unknown):
   testContext.SANDBOX.stub(ComponentSet.prototype, 'getSourceComponents').returns(
     new LazyCollection([{ content: 'my/path' } as SourceComponent])
   );
-  testContext.SANDBOX.stub(MetadataHelper.prototype, 'readFileUtf8').returns(JSON.stringify(result));
+  testContext.SANDBOX.stub(MetadataHelper, 'readFileUtf8').returns(JSON.stringify(result));
 }

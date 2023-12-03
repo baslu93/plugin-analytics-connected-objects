@@ -1,4 +1,4 @@
-import * as path from 'path';
+import * as path from 'node:path';
 import { expect } from 'chai';
 import { TestSession, execCmd } from '@salesforce/cli-plugins-testkit';
 import { Messages } from '@salesforce/core';
@@ -47,36 +47,36 @@ describe('analytics connected-objects upsert NUTs', () => {
     const output = execCmd<ConnectedObjectUpsertResult[]>(command, { ensureExitCode: 0, cli: 'sf' }).jsonOutput;
     expect(output).to.deep.equal({
       status: 0,
-      result: [{
-        connectorName: 'SFDC_LOCAL',
-        objectName: 'User',
-        isNew: false,
-        fields: [
-          'LastName',
-          'FirstName',
-          'CompanyName',
-          'Email',
-          'Phone',
-          'MobilePhone',
-          'UserRoleId',
-          'ProfileId',
-          'LanguageLocaleKey',
-          'LastLoginDate',
-          'CreatedDate',
-          'LastModifiedDate',
-        ],
-        fieldsCount: 12,
-      },
-      {
-        connectorName: 'SFDC_LOCAL',
-        objectName: 'Profile',
-        isNew: true,
-        fields: ['Id', 'Name'],
-        fieldsCount: 2,
-      }],
-      warnings: [
-        messages.getMessage('fields.not.found', [ 'User', 'SFDC_LOCAL' , 'Extra__c'])
-      ]
+      result: [
+        {
+          connectorName: 'SFDC_LOCAL',
+          objectName: 'User',
+          isNew: false,
+          fields: [
+            'LastName',
+            'FirstName',
+            'CompanyName',
+            'Email',
+            'Phone',
+            'MobilePhone',
+            'UserRoleId',
+            'ProfileId',
+            'LanguageLocaleKey',
+            'LastLoginDate',
+            'CreatedDate',
+            'LastModifiedDate',
+          ],
+          fieldsCount: 12,
+        },
+        {
+          connectorName: 'SFDC_LOCAL',
+          objectName: 'Profile',
+          isNew: true,
+          fields: ['Id', 'Name'],
+          fieldsCount: 2,
+        },
+      ],
+      warnings: [messages.getMessage('fields.not.found', ['User', 'SFDC_LOCAL', 'Extra__c'])],
     });
   });
 });
