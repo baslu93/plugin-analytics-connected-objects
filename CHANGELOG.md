@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.1.0...v1.1.1) (2023-12-03)
+
+
+### Bug Fixes
+
+* eslint suggestions ([4c4bdf5](https://github.com/baslu93/plugin-analytics-connected-objects/commit/4c4bdf504cb5468071a15be6585fc6b9e8b6bbf1))
+
 ## [1.1.0](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.0.0...v1.1.0) (2023-12-03)
 
 
