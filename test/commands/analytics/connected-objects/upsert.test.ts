@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { resolve } from 'path';
-import * as fs from 'fs';
 import { expect } from 'chai';
 import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup';
 import { ensureJsonMap, AnyJson } from '@salesforce/ts-types';
@@ -9,9 +8,13 @@ import { ComponentSet, ComponentSetBuilder, LazyCollection, SourceComponent } fr
 import { ApiHelper } from '../../../../src/apiHelper';
 import { PostReplicatedDataset } from '../../../../src/modules/upsert';
 import { MetadataHelper } from '../../../../src/metadataHelper';
-import ConnectedObjectUpsert from '../../../../src/commands/analytics/connected-objects/upsert';
+import ConnectedObjectsUpsert from '../../../../src/commands/analytics/connected-objects/upsert';
 import {
-  createReplicatedDateset, getDataConnectors, getEmptyReplicatedDataset, getReplicatedDatasetFields, getReplicatedDatasets
+  createReplicatedDateset,
+  getDataConnectors,
+  getEmptyReplicatedDataset,
+  getReplicatedDatasetFields,
+  getReplicatedDatasets,
 } from './mocks/apis';
 import { recipeFields, simpleRecipe } from './mocks/recipes';
 
@@ -44,11 +47,13 @@ describe('analytics recipe run', () => {
     };
   });
 
-  after(async () => { $$.restore(); });
-  
+  after(async () => {
+    $$.restore();
+  });
+
   it('should mark multiple fields and return a json', async () => {
     stubMethodsInMetadataHelper($$, simpleRecipe);
-    const cmd = new ConnectedObjectUpsert([...commandParams, '--json'], config);
+    const cmd = new ConnectedObjectsUpsert([...commandParams, '--json'], config);
     const result = await cmd.run();
     expect(result).to.deep.equal([
       {
@@ -56,8 +61,8 @@ describe('analytics recipe run', () => {
         isNew: true,
         fields: recipeFields,
         fieldsCount: recipeFields.length,
-        connectorName: 'SFDC_LOCAL'
-      }
+        connectorName: 'SFDC_LOCAL',
+      },
     ]);
   });
 
@@ -72,7 +77,7 @@ describe('analytics recipe run', () => {
     $$.SANDBOX.stub(ApiHelper.prototype, 'getReplicatedDatasetFields' as any).resolves(
       getReplicatedDatasetFields(fieldIsSkipped)
     );
-    const cmd = new ConnectedObjectUpsert([...commandParams, '--json'], config);
+    const cmd = new ConnectedObjectsUpsert([...commandParams, '--json'], config);
     const result = await cmd.run();
     expect(result).to.deep.equal([
       {
@@ -81,7 +86,7 @@ describe('analytics recipe run', () => {
         fields: [USERNAME],
         fieldsCount: 1,
         connectorName: 'SFDC_LOCAL',
-      }
+      },
     ]);
   });
 
@@ -95,7 +100,7 @@ describe('analytics recipe run', () => {
     $$.SANDBOX.stub(ApiHelper.prototype, 'getReplicatedDatasetFields' as any).resolves(
       getReplicatedDatasetFields(fieldIsSkipped)
     );
-    const cmd = new ConnectedObjectUpsert([...commandParams, '--verbose'], config);
+    const cmd = new ConnectedObjectsUpsert([...commandParams, '--verbose'], config);
     await cmd.run();
   });
 
@@ -109,7 +114,7 @@ describe('analytics recipe run', () => {
     $$.SANDBOX.stub(ApiHelper.prototype, 'getReplicatedDatasetFields' as any).resolves(
       getReplicatedDatasetFields(fieldIsSkipped)
     );
-    const cmd = new ConnectedObjectUpsert([...commandParams, '--json', '--verbose'], config);
+    const cmd = new ConnectedObjectsUpsert([...commandParams, '--json', '--verbose'], config);
     const result = await cmd.run();
     expect(result).to.lengthOf(0);
   });
@@ -123,5 +128,5 @@ function stubMethodsInMetadataHelper(testContext: TestContext, result: unknown):
   testContext.SANDBOX.stub(ComponentSet.prototype, 'getSourceComponents').returns(
     new LazyCollection([{ content: 'my/path' } as SourceComponent])
   );
-  testContext.SANDBOX.stub(fs, 'readFileSync').returns(JSON.stringify(result));
+  testContext.SANDBOX.stub(MetadataHelper.prototype, 'readFileUtf8').returns(JSON.stringify(result));
 }

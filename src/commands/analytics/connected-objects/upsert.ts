@@ -1,7 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import { SfCommand, Flags, Progress } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
-import { blue, bold } from 'chalk';
 import { MetadataHelper } from '../../../metadataHelper';
 import { ApiHelper } from '../../../apiHelper';
 import { RecipeDefinition, LoadDefinitionNodeParam, ReplicatedDataset } from '../../../modules/upsert';
@@ -20,7 +19,7 @@ export interface ConnectedObjectUpsertResult {
   fieldsCount?: number;
 }
 
-export default class ConnectedObjectUpsert extends SfCommand<ConnectedObjectUpsertResult[]> {
+export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUpsertResult[]> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -55,7 +54,7 @@ export default class ConnectedObjectUpsert extends SfCommand<ConnectedObjectUpse
   };
 
   public async run(): Promise<ConnectedObjectUpsertResult[]> {
-    const { flags } = await this.parse(ConnectedObjectUpsert);
+    const { flags } = await this.parse(ConnectedObjectsUpsert);
     const conn = flags['target-org'].getConnection(flags['api-version']);
     const service = new ApiHelper(conn);
 
@@ -199,7 +198,7 @@ export default class ConnectedObjectUpsert extends SfCommand<ConnectedObjectUpse
           extended: !verbose,
         },
       },
-      { title: blue(bold('Changed connected-objects')) }
+      { title: 'Changed connected-objects' }
     );
   }
 }

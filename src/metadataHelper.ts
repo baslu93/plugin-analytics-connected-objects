@@ -23,9 +23,13 @@ export class MetadataHelper {
     const result = new Array<T>();
     const sourceComponents = componentSet.getSourceComponents().toArray();
     for (const sourceComponent of sourceComponents) {
-      const recipeString = fs.readFileSync(sourceComponent?.content as string, 'utf-8');
+      const recipeString = this.readFileUtf8(sourceComponent?.content as string);
       result.push(JSON.parse(recipeString) as T);
     }
     return result;
+  }
+
+  public readFileUtf8(path: string) {
+    return fs.readFileSync(path, 'utf8');
   }
 }
