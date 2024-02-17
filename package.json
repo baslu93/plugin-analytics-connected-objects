@@ -8,7 +8,7 @@
     "eslint-plugin-sf-plugin": "^1.17.3",
     "mocha": "^10.3.0",
     "nyc": "^15.1.0",
-    "oclif": "^4.4.7",
+    "oclif": "^4.4.12",
     "shx": "^0.3.4",
     "ts-node": "^10.9.2",
     "wireit": "^0.14.4"
