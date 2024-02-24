@@ -14,7 +14,7 @@
     "wireit": "^0.14.4"
   },
   "dependencies": {
-    "@oclif/core": "^3.19.1",
+    "@oclif/core": "^3.19.6",
     "@salesforce/core": "^6.5.3",
     "@salesforce/kit": "^3.0.15",
     "@salesforce/sf-plugins-core": "^5.0.13",
