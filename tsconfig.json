@@ -4,16 +4,7 @@
     "outDir": "lib",
     "rootDir": "src",
     "skipLibCheck": true,
-    "declaration": false,
-    "baseUrl": ".",
-    "downlevelIteration": true,
-    "paths": {
-      "@salesforce/kit": [
-        "node_modules/@salesforce/kit"
-      ]
-    }
+    "strictNullChecks": true
   },
-  "include": [
-    "./src/**/*.ts"
-  ]
+  "include": ["./src/**/*.ts"]
 }

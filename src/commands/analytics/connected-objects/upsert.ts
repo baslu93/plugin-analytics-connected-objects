@@ -1,12 +1,12 @@
 /* eslint-disable no-await-in-loop */
 import { SfCommand, Flags, Progress } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
-import { MetadataHelper } from '../../../metadataHelper';
-import { ApiHelper } from '../../../apiHelper';
-import { RecipeDefinition, LoadDefinitionNodeParam, ReplicatedDataset } from '../../../modules/upsert';
-import { PrinterHelper } from '../../../printerHelper';
+import { MetadataHelper } from '../../../metadataHelper.js';
+import { ApiHelper } from '../../../apiHelper.js';
+import { RecipeDefinition, LoadDefinitionNodeParam, ReplicatedDataset } from '../../../modules/upsert.js';
+import { PrinterHelper } from '../../../printerHelper.js';
 
-Messages.importMessagesDirectory(__dirname);
+Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('plugin-analytics-connected-objects', 'connected-objects.upsert');
 const common = Messages.loadMessages('plugin-analytics-connected-objects', 'common');
 
@@ -113,10 +113,14 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
           resultMap.set(objectName, { objectName, isNew: false, connectorName });
         }
         const fieldSet = objectFields.get(dataset.sourceObjectName) as Set<string>;
-        const {changedFields, missingFields} = await service.updateReplicatedDatasetFields(dataset.id, fieldSet);
+        const { changedFields, missingFields } = await service.updateReplicatedDatasetFields(dataset.id, fieldSet);
 
-        if(missingFields.length > 0){
-          const message = messages.getMessage('fields.not.found', [objectName, connectorName, missingFields.join(', ')]); 
+        if (missingFields.length > 0) {
+          const message = messages.getMessage('fields.not.found', [
+            objectName,
+            connectorName,
+            missingFields.join(', '),
+          ]);
           warnMessages.push(message);
         }
         if (changedFields.length > 0) {
@@ -130,11 +134,11 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
     }
     progressBar.stop();
 
-    if(warnMessages.length > 0){
-      if(!flags.json){
-        warnMessages[warnMessages.length -1] += '\n'; // Last warning line break 
+    if (warnMessages.length > 0) {
+      if (!flags.json) {
+        warnMessages[warnMessages.length - 1] += '\n'; // Last warning line break
       }
-      for(const warnMessage of warnMessages){
+      for (const warnMessage of warnMessages) {
         this.warn(warnMessage);
       }
     }

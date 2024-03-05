@@ -1,27 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { resolve } from 'node:path';
+
+import path, { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { expect } from 'chai';
-import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup';
+import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup.js';
 import { ensureJsonMap, AnyJson } from '@salesforce/ts-types';
 import { Config } from '@oclif/core';
 import { ComponentSet, ComponentSetBuilder, LazyCollection, SourceComponent } from '@salesforce/source-deploy-retrieve';
-import { ApiHelper } from '../../../../src/apiHelper';
-import { PostReplicatedDataset } from '../../../../src/modules/upsert';
-import { MetadataHelper } from '../../../../src/metadataHelper';
-import ConnectedObjectsUpsert from '../../../../src/commands/analytics/connected-objects/upsert';
+import { ApiHelper } from '../../../../src/apiHelper.js';
+import { PostReplicatedDataset } from '../../../../src/modules/upsert.js';
+import { MetadataHelper } from '../../../../src/metadataHelper.js';
+import ConnectedObjectsUpsert from '../../../../src/commands/analytics/connected-objects/upsert.js';
 import {
   createReplicatedDateset,
   getDataConnectors,
   getEmptyReplicatedDataset,
   getReplicatedDatasetFields,
   getReplicatedDatasets,
-} from './mocks/apis';
-import { recipeFields, simpleRecipe } from './mocks/recipes';
+} from './mocks/apis.js';
+import { recipeFields, simpleRecipe } from './mocks/recipes.js';
 
 describe('analytics recipe run', () => {
   const $$ = new TestContext();
   const testOrg = new MockTestOrgData();
-  const config = new Config({ root: resolve(__dirname, '../../../package.json') });
+  const filename = fileURLToPath(import.meta.url);
+  const dirname = path.dirname(filename);
+  const config = new Config({ root: resolve(dirname, '../../../package.json') });
   const commandParams = ['--target-org', 'test@org.com', '--recipe-names', 'Simple_Recipe'];
 
   beforeEach('prepare session', async () => {
@@ -111,6 +115,8 @@ describe('analytics recipe run', () => {
     );
     const fieldIsSkipped = new Map(recipeFields.map((field) => [field, false]));
     recipeFields.push('Extra__c');
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $$.SANDBOX.stub(ApiHelper.prototype, 'getReplicatedDatasetFields' as any).resolves(
       getReplicatedDatasetFields(fieldIsSkipped)
     );

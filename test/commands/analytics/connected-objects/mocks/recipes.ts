@@ -1,4 +1,4 @@
-import { RecipeDefinition } from '../../../../../src/modules/upsert';
+import { RecipeDefinition } from '../../../../../src/modules/upsert.js';
 
 export const recipeFields: string[] = [
   'Id',
