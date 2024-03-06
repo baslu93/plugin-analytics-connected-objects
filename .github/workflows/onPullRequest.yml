@@ -27,10 +27,16 @@ jobs:
       - name: Install Salesforce CLI
         run: npm install @salesforce/cli --global
 
+      - name: Install packages
+        run: yarn install
+
+      - name: Compile
+        run: yarn run compile
+
       - name: Install plugin
         run: |
           sf plugins link .
           sf plugins
 
-      - name: Unit test
-        run: yarn test:only
+      - name: Unit tests
+        run: yarn run test:only

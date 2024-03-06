@@ -1,10 +1,13 @@
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { expect } from 'chai';
 import { TestSession, execCmd } from '@salesforce/cli-plugins-testkit';
 import { Messages } from '@salesforce/core';
-import ConnectedObjectUpsertResult from '../../../../src/commands/analytics/connected-objects/upsert';
+import ConnectedObjectUpsertResult from '../../../../src/commands/analytics/connected-objects/upsert.js';
 
-Messages.importMessagesDirectory(__dirname);
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
+Messages.importMessagesDirectory(dirname);
 const messages = Messages.loadMessages('plugin-analytics-connected-objects', 'connected-objects.upsert');
 
 describe('analytics connected-objects upsert NUTs', () => {

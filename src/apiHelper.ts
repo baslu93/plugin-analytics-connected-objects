@@ -1,6 +1,12 @@
 import { Connection } from '@salesforce/core';
-import { ChangedAndMissingFields, GetDataConnectors, GetReplicatedDatasets, PostReplicatedDataset, ReplicatedDataset } from './modules/upsert';
-import { GetReplicatedDatasetFields } from './modules/upsert';
+import {
+  ChangedAndMissingFields,
+  GetDataConnectors,
+  GetReplicatedDatasets,
+  PostReplicatedDataset,
+  ReplicatedDataset,
+} from './modules/upsert.js';
+import { GetReplicatedDatasetFields } from './modules/upsert.js';
 
 export class ApiHelper {
   public static readonly REPLICATED_DATASETS_API = '/wave/replicatedDatasets';
@@ -13,9 +19,7 @@ export class ApiHelper {
 
   public async getConnectors(): Promise<Map<string, string>> {
     const response = new Map<string, string>();
-    const getDataConnectorsResponse = await this.conn.requestGet<GetDataConnectors>(
-      ApiHelper.DATA_CONNECTORS_API
-    );
+    const getDataConnectorsResponse = await this.conn.requestGet<GetDataConnectors>(ApiHelper.DATA_CONNECTORS_API);
     for (const connector of getDataConnectorsResponse.dataConnectors) {
       response.set(connector.name, connector.id);
     }
@@ -23,9 +27,7 @@ export class ApiHelper {
   }
 
   public async getReplicatedDatasets(): Promise<ReplicatedDataset[]> {
-    const replicatedDatasets = await this.conn.requestGet<GetReplicatedDatasets>(
-      ApiHelper.REPLICATED_DATASETS_API
-    );
+    const replicatedDatasets = await this.conn.requestGet<GetReplicatedDatasets>(ApiHelper.REPLICATED_DATASETS_API);
     return replicatedDatasets.replicatedDatasets;
   }
 
@@ -35,7 +37,10 @@ export class ApiHelper {
     return result;
   }
 
-  public async updateReplicatedDatasetFields(datasetId: string, repositoryFieldSet: Set<string>): Promise<ChangedAndMissingFields> {
+  public async updateReplicatedDatasetFields(
+    datasetId: string,
+    repositoryFieldSet: Set<string>
+  ): Promise<ChangedAndMissingFields> {
     const replicatedDatasetFieldsObject = await this.getReplicatedDatasetFields(datasetId);
     const changedFields = new Array<string>();
     const orgFieldSet = new Set<string>();
@@ -50,12 +55,12 @@ export class ApiHelper {
       await this.patchReplicatedDatasetFields(datasetId, replicatedDatasetFieldsObject);
     }
     const missingFields = new Array<string>();
-    for (const field of Array.from(repositoryFieldSet)){
-      if(!orgFieldSet.has(field)){
+    for (const field of Array.from(repositoryFieldSet)) {
+      if (!orgFieldSet.has(field)) {
         missingFields.push(field);
       }
     }
-    return {changedFields, missingFields};
+    return { changedFields, missingFields };
   }
 
   private async getReplicatedDatasetFields(datasetId: string): Promise<GetReplicatedDatasetFields> {

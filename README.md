@@ -9,6 +9,9 @@ The process is highly manual, and forgetting to track certain fields often cause
 
 The command, which can be executed locally or inserted into a CI/CD pipeline, verifies the required fields from the recipes and marks them in the environment within seconds.
 
+> [!NOTE]
+> Despite the warning message indicating partial support for ESM plugins in OCLIF, rest assured that the plugins will function as expected.
+
 ## Install
 
 Run the following command (if you are still using the old CLI, relace `sf` with `sfdx` or [move to the new CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_move_to_sf_v2.htm)):

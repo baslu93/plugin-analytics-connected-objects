@@ -1,6 +1,6 @@
-import { ApiHelper } from '../../../../../src/apiHelper';
-import { GetDataConnectors, GetReplicatedDatasets, ReplicatedDataset } from '../../../../../src/modules/upsert';
-import { GetReplicatedDatasetFields, ReplicatedDatasetField } from '../../../../../src/modules/upsert';
+import { ApiHelper } from '../../../../../src/apiHelper.js';
+import { GetDataConnectors, GetReplicatedDatasets, ReplicatedDataset } from '../../../../../src/modules/upsert.js';
+import { GetReplicatedDatasetFields, ReplicatedDatasetField } from '../../../../../src/modules/upsert.js';
 
 export function getReplicatedDatasets(sourceObjectNames: string[]): GetReplicatedDatasets {
   const replicatedDatasets: ReplicatedDataset[] = new Array<ReplicatedDataset>();

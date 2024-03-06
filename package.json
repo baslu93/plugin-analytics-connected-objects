@@ -2,24 +2,23 @@
   "name": "plugin-analytics-connected-objects",
   "description": "Additional Salesforce CLI commands to manage CRM Analytics connected-objects",
   "version": "1.1.1",
+  "author": "Luca Bassani",
+  "dependencies": {
+    "@oclif/core": "^3.22.0",
+    "@salesforce/core": "^6.7.0",
+    "@salesforce/sf-plugins-core": "^7.1.14",
+    "@salesforce/source-deploy-retrieve": "^10.5.1"
+  },
   "devDependencies": {
-    "@salesforce/cli-plugins-testkit": "^5.1.8",
-    "@salesforce/dev-scripts": "^7.1.1",
-    "eslint-plugin-sf-plugin": "^1.17.3",
-    "mocha": "^10.3.0",
-    "nyc": "^15.1.0",
-    "oclif": "^4.4.7",
+    "@oclif/plugin-command-snapshot": "^5.1.0",
+    "@salesforce/cli-plugins-testkit": "^5.1.10",
+    "@salesforce/dev-scripts": "^8.4.2",
+    "@types/mocha": "^10.0.6",
+    "eslint-plugin-sf-plugin": "^1.17.4",
+    "oclif": "^4.5.0",
     "shx": "^0.3.4",
     "ts-node": "^10.9.2",
-    "wireit": "^0.14.4"
-  },
-  "dependencies": {
-    "@oclif/core": "^3.19.1",
-    "@salesforce/core": "^6.5.3",
-    "@salesforce/kit": "^3.0.15",
-    "@salesforce/sf-plugins-core": "^5.0.13",
-    "@salesforce/source-deploy-retrieve": "^10.3.7",
-    "@salesforce/ts-types": "^2.0.9"
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -27,7 +26,8 @@
   "files": [
     "/lib",
     "/messages",
-    "/oclif.manifest.json"
+    "/oclif.manifest.json",
+    "/oclif.lock"
   ],
   "keywords": [
     "force",
@@ -39,7 +39,6 @@
     "sf"
   ],
   "license": "MIT",
-  "main": "lib/index.js",
   "oclif": {
     "commands": "./lib/commands",
     "bin": "sf",
@@ -61,18 +60,20 @@
           }
         }
       }
-    }
+    },
+    "flexibleTaxonomy": true
   },
   "scripts": {
     "build": "wireit",
     "clean": "sf-clean",
     "clean-all": "sf-clean all",
-    "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
+    "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json oclif.lock",
     "compile": "wireit",
     "docs": "sf-docs",
     "format": "wireit",
     "lint": "wireit",
-    "postpack": "shx rm -f oclif.manifest.json",
+    "postinstall": "yarn husky install",
+    "postpack": "shx rm -f oclif.manifest.json oclif.lock",
     "prepack": "sf-prepack",
     "test": "wireit",
     "test:nuts": "nyc mocha \"**/*.nut.ts\" --slow 4500 --timeout 600000",
@@ -184,5 +185,6 @@
       "output": []
     }
   },
-  "author": "Luca Bassani"
+  "exports": "./lib/index.js",
+  "type": "module"
 }
