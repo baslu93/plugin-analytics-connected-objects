@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.1.2...v1.1.3) (2024-03-06)
+
+
+### Bug Fixes
+
+* postinstall script removed ([ecbbaa4](https://github.com/baslu93/plugin-analytics-connected-objects/commit/ecbbaa4a9150af1f5f28911f44db161e9e075b15))
+
 ## [1.1.2](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.1.1...v1.1.2) (2024-03-06)
 
 
