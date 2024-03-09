@@ -15,7 +15,7 @@
     "@salesforce/dev-scripts": "^8.4.2",
     "@types/mocha": "^10.0.6",
     "eslint-plugin-sf-plugin": "^1.17.4",
-    "oclif": "^4.5.0",
+    "oclif": "^4.5.2",
     "shx": "^0.3.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
