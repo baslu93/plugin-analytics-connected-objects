@@ -10,7 +10,7 @@ Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('plugin-analytics-connected-objects', 'connected-objects.upsert');
 const common = Messages.loadMessages('plugin-analytics-connected-objects', 'common');
 
-export interface ConnectedObjectUpsertResult {
+export type ConnectedObjectUpsertResult = {
   [key: string]: string | boolean | string[] | number | undefined;
   objectName: string;
   connectorName: string;
@@ -185,24 +185,25 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
   }
 
   private printConnectionUpgradeResult(records: ConnectedObjectUpsertResult[], verbose: boolean): void {
-    this.table(
-      records,
-      {
-        objectName: { header: 'OBJECT' },
-        connectorName: { header: 'CONNECTOR' },
-        isNEW: {
-          header: 'OPERATION',
-          get: (data): string => (data.isNew ? 'Create' : 'Update'),
-        },
-        fieldsCount: { header: 'FIELDSCOUNT' },
-        fields: {
-          header: 'FIELDS',
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          get: (data): string => PrinterHelper.printFieldsMultiline(data.fields!, 60),
-          extended: !verbose,
-        },
-      },
-      { title: 'Changed connected-objects' }
-    );
+    const columns = [
+      { key: 'objectName', name: 'OBJECT' },
+      { key: 'connectorName', name: 'CONNECTOR' },
+      { key: 'operation', name: 'OPERATION' },
+      { key: 'fieldsCount', name: 'FIELDSCOUNT' },
+      { key: 'fields', name: 'FIELDS' }
+    ];
+    for(const record of records) {
+      record.operation = record.isNew ? 'Created' : 'Updated';
+    } 
+    if (verbose) {
+      columns.push({ key: 'connectorName', name: 'CONNECTOR' });
+      for(const record of records) {
+        record.fieldDetails = PrinterHelper.printFieldsMultiline(record.fields!, 60);
+      }
+    }
+    this.table({
+      data: records,
+      columns
+    });
   }
 }

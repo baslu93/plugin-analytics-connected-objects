@@ -38,6 +38,7 @@ describe('analytics connected-objects upsert NUTs', () => {
         connectorName: 'SFDC_LOCAL',
         objectName: 'User',
         isNew: true,
+        operation: 'Created',
         fields: ['Id', 'Username'],
         fieldsCount: 2,
       },
@@ -55,6 +56,7 @@ describe('analytics connected-objects upsert NUTs', () => {
           connectorName: 'SFDC_LOCAL',
           objectName: 'User',
           isNew: false,
+          operation: 'Updated',
           fields: [
             'LastName',
             'FirstName',
@@ -75,6 +77,7 @@ describe('analytics connected-objects upsert NUTs', () => {
           connectorName: 'SFDC_LOCAL',
           objectName: 'Profile',
           isNew: true,
+          operation: 'Created',
           fields: ['Id', 'Name'],
           fieldsCount: 2,
         },
