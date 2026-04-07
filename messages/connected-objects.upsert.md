@@ -43,10 +43,6 @@ Print the changed fields into the outcome table
 
 Recipes not found in the repository
 
-# nothing.changed
-
-Nothing changed
-
 # connector.not.found
 
 Connector named %s not found. Create an empty data connection to proceed

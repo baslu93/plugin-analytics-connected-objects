@@ -124,7 +124,8 @@ describe('analytics recipe run', () => {
     );
     const cmd = new ConnectedObjectsUpsert([...commandParams, '--json', '--verbose'], config);
     const result = await cmd.run();
-    expect(result).to.lengthOf(0);
+    expect(result).to.lengthOf(1);
+    expect(result[0].fieldsCount).to.equal(0);
   });
 });
 
