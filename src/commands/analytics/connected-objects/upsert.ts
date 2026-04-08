@@ -32,8 +32,7 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
     'target-org': Flags.requiredOrg({
       char: 'o',
       summary: common.getMessage('flags.target-org.summary'),
-      description: common.getMessage('flags.target-org.description'),
-      required: true,
+      description: common.getMessage('flags.target-org.description')
     }),
     'recipe-names': Flags.string({
       char: 'n',
