@@ -4,13 +4,12 @@ import { Messages, SfError } from '@salesforce/core';
 import { MetadataHelper } from '../../../metadataHelper.js';
 import { ApiHelper } from '../../../apiHelper.js';
 import { RecipeDefinition, LoadDefinitionNodeParam, ReplicatedDataset } from '../../../modules/upsert.js';
-import { PrinterHelper } from '../../../printerHelper.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('plugin-analytics-connected-objects', 'connected-objects.upsert');
 const common = Messages.loadMessages('plugin-analytics-connected-objects', 'common');
 
-export interface ConnectedObjectUpsertResult {
+export type ConnectedObjectUpsertResult = {
   [key: string]: string | boolean | string[] | number | undefined;
   objectName: string;
   connectorName: string;
@@ -33,8 +32,7 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
     'target-org': Flags.requiredOrg({
       char: 'o',
       summary: common.getMessage('flags.target-org.summary'),
-      description: common.getMessage('flags.target-org.description'),
-      required: true,
+      description: common.getMessage('flags.target-org.description')
     }),
     'recipe-names': Flags.string({
       char: 'n',
@@ -50,7 +48,7 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
     }),
     verbose: Flags.boolean({
       summary: messages.getMessage('flags.verbose.summary'),
-    }),
+    })
   };
 
   public async run(): Promise<ConnectedObjectUpsertResult[]> {
@@ -114,7 +112,6 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
         }
         const fieldSet = objectFields.get(dataset.sourceObjectName) as Set<string>;
         const { changedFields, missingFields } = await service.updateReplicatedDatasetFields(dataset.id, fieldSet);
-
         if (missingFields.length > 0) {
           const message = messages.getMessage('fields.not.found', [
             objectName,
@@ -123,11 +120,10 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
           ]);
           warnMessages.push(message);
         }
-        if (changedFields.length > 0) {
-          const item = resultMap.get(dataset.sourceObjectName) as ConnectedObjectUpsertResult;
-          item.fields = changedFields;
-          item.fieldsCount = changedFields.length;
-        }
+        const item = resultMap.get(dataset.sourceObjectName) as ConnectedObjectUpsertResult;
+        item.fields = changedFields;
+        item.fieldsCount = changedFields.length;
+        item.operation = changedFields.length === 0 ? 'Unchanged' : item.isNew ? 'Created' : 'Updated';
         current++;
         progressBar.update(current);
       }
@@ -142,15 +138,8 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
         this.warn(warnMessage);
       }
     }
-
-    const result: ConnectedObjectUpsertResult[] = Array.from(resultMap.values()).filter(
-      (x) => x.fields && x.fields.length > 0
-    );
-    if (result.length > 0) {
-      this.printConnectionUpgradeResult(result, flags.verbose);
-    } else {
-      this.log(messages.getMessage('nothing.changed'));
-    }
+    const result: ConnectedObjectUpsertResult[] = Array.from(resultMap.values());
+    this.printConnectionUpgradeResult(result);
     return result;
   }
 
@@ -184,25 +173,16 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
     return response;
   }
 
-  private printConnectionUpgradeResult(records: ConnectedObjectUpsertResult[], verbose: boolean): void {
-    this.table(
-      records,
-      {
-        objectName: { header: 'OBJECT' },
-        connectorName: { header: 'CONNECTOR' },
-        isNEW: {
-          header: 'OPERATION',
-          get: (data): string => (data.isNew ? 'Create' : 'Update'),
-        },
-        fieldsCount: { header: 'FIELDSCOUNT' },
-        fields: {
-          header: 'FIELDS',
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          get: (data): string => PrinterHelper.printFieldsMultiline(data.fields!, 60),
-          extended: !verbose,
-        },
-      },
-      { title: 'Changed connected-objects' }
-    );
+  private printConnectionUpgradeResult(records: ConnectedObjectUpsertResult[]): void {
+    const columns = [
+      { key: 'objectName', name: 'Object' },
+      { key: 'connectorName', name: 'Connector' },
+      { key: 'operation', name: 'Operation' },
+      { key: 'fieldsCount', name: 'Added Fields' }
+    ];
+    this.table({
+      data: records,
+      columns
+    });
   }
 }
