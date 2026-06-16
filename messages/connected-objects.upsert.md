@@ -1,13 +1,11 @@
 # summary
 
-Create/update the analytics connected objects and fields according to the ones mentioned in the given recipes.
+Upsert CRM Analytics Connected Objects and fields according to the ones mentioned in the given recipes.
 
 # description
 
-Create/update the analytics connected object and fields, keeping the existing ones and adding the new detected.
-The diff check is perfomed comparing the target org connections and the object and fields in the input nodes of the given recipe or recipes (in your repository).
-Use "--all" to consider all recipes in your repository.
-In case a new object is added a connection, the connection mode will be the default one.
+Upsert CRM Analytics Connected Objects (also known as Replicated Datasets) and fields in the target org based on the input nodes of your local recipes.
+Existing connections are preserved, and newly detected objects or fields are added. If a new object connection is created, it uses the default connection mode. Use "--all" to evaluate all recipes in the repository.
 
 # examples
 
@@ -25,19 +23,19 @@ In case a new object is added a connection, the connection mode will be the defa
 
 # flags.recipe-names.summary
 
-The name of the recipes you want to evaluate
+The names of the recipes to consider
 
 # flags.recipe-names.description
 
-The api name of the recipes in your repository, which objects and fields will be considered in the diff check the org connections
+The API names of the recipes in your repository whose input node objects and fields will be configured in the target org
 
 # flags.all.summary
 
-Evaluate all recipes in your repository
+Consider all recipes in the repository
 
 # flags.verbose.summary
 
-Print the changed fields into the outcome table
+Enriches the JSON output with a detailed list of the fields added to the target org
 
 # recipes.not.found
 
