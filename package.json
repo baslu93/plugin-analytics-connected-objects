@@ -2,7 +2,12 @@
   "name": "plugin-analytics-connected-objects",
   "description": "Additional Salesforce CLI commands to manage CRM Analytics connected-objects",
   "version": "1.2.0",
-  "author": "Luca Bassani",
+  "author": "Luca Bassani <baslu93@live.it>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baslu93/plugin-analytics-connected-objects.git"
+  },
+  "homepage": "https://github.com/baslu93/plugin-analytics-connected-objects#readme",
   "dependencies": {
     "@oclif/core": "^4",
     "@salesforce/core": "^8.25.1",
