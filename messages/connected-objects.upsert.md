@@ -1,10 +1,10 @@
 # summary
 
-Upsert CRM Analytics Connected Objects and fields according to the ones mentioned in the given recipes.
+Upsert CRM Analytics Connected Objects and fields in the target org based on the input nodes of your local recipes.
 
 # description
 
-Upsert CRM Analytics Connected Objects (also known as Replicated Datasets) and fields in the target org based on the input nodes of your local recipes.
+Create or update CRM Analytics Connected Objects (Replicated Datasets) and fields in the target org, using the input nodes of the local recipes passed to the command.
 Existing connections are preserved, and newly detected objects or fields are added. If a new object connection is created, it uses the default connection mode. Use "--all" to evaluate all recipes in the repository.
 
 # examples

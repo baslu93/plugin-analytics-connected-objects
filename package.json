@@ -1,6 +1,6 @@
 {
   "name": "plugin-analytics-connected-objects",
-  "description": "Additional Salesforce CLI commands to manage CRM Analytics connected-objects",
+  "description": "Salesforce CLI plugin to upsert CRM Analytics Connected Objects and fields in the target org based on the input nodes of your local recipes",
   "version": "1.2.3",
   "author": "Luca Bassani <baslu93@live.it>",
   "repository": {
