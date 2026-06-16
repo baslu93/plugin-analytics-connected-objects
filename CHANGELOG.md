@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.2.1...v1.2.2) (2026-06-16)
+
+
+### Bug Fixes
+
+* package publisher workflow test ([adef5b8](https://github.com/baslu93/plugin-analytics-connected-objects/commit/adef5b8ae56aed0742adc0f2367242985125d0d5))
+
 ## [1.2.1](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.2.0...v1.2.1) (2026-06-16)
 
 
