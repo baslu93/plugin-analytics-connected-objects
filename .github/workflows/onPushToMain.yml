@@ -40,8 +40,6 @@ jobs:
 
       - name: Publish to npm
         run: yarn publish --access public --tag latest-rc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Communication
         uses: apexskier/github-release-commenter@v1
