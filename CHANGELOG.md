@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.2.2...v1.2.3) (2026-06-16)
+
+
+### Bug Fixes
+
+* id-token added ([0a38f54](https://github.com/baslu93/plugin-analytics-connected-objects/commit/0a38f543a95d39774bfb4173f6d3b2e324ce344c))
+
 ## [1.2.2](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.2.1...v1.2.2) (2026-06-16)
 
 
