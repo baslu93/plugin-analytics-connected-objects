@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.2.0...v1.2.1) (2026-06-16)
+
+
+### Bug Fixes
+
+* removing extra comma ([fc4255d](https://github.com/baslu93/plugin-analytics-connected-objects/commit/fc4255d1b810b3976df7e2b4a03bdb95d965ba4e))
+
 ## [1.2.0](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.1.3...v1.2.0) (2026-04-08)
 
 
