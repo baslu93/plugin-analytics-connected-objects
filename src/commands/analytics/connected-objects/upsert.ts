@@ -47,7 +47,7 @@ export default class ConnectedObjectsUpsert extends SfCommand<ConnectedObjectUps
       exclusive: ['recipe-names'],
     }),
     verbose: Flags.boolean({
-      summary: messages.getMessage('flags.verbose.summary'),
+      summary: messages.getMessage('flags.verbose.summary')
     })
   };
 
