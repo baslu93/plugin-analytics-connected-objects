@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.4](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.2.3...v1.2.4) (2026-06-16)
+
+
+### Bug Fixes
+
+* description changed ([c69e033](https://github.com/baslu93/plugin-analytics-connected-objects/commit/c69e03328ffc1f97438c9c440da2e33d556785c3))
+
 ## [1.2.3](https://github.com/baslu93/plugin-analytics-connected-objects/compare/v1.2.2...v1.2.3) (2026-06-16)
 
 
